@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ultra Matching</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial;
+        }
+
+        .uctitle {
+            color: maroon;
+        }
+
+        .likert-header {
+            color: maroon;
+        }
+
+        /* Style the tab */
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 17px;
+        }
+
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+            background-color: #ddd;
+        }
+
+        /* Create an active/current tablink class */
+        .tab button.active {
+            background-color: #ccc;
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+
+        table,
+        th,
+        td {
+            border: 0.5px solid black;
+        }
+
+        .wrap {
+            font: 12px Arial, san-serif;
+        }
+
+
+        form .statement {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 30px 0 0 4.25%;
+            margin-bottom: 10px;
+        }
+
+        form .likert {
+            list-style: none;
+            width: 100%;
+            margin: 0;
+            padding: 0 0 35px;
+            display: block;
+            border-bottom: 2px solid #efefef;
+        }
+
+        form .likert:last-of-type {
+            border-bottom: 0;
+        }
+
+        form .likert:before {
+            content: '';
+            position: relative;
+            top: 11px;
+            left: 9.5%;
+            display: block;
+            background-color: #efefef;
+            height: 4px;
+            width: 78%;
+        }
+
+        form .likert li {
+            display: inline-block;
+            width: 19%;
+            text-align: center;
+            vertical-align: top;
+        }
+
+        form .likert li input[type=radio] {
+            display: block;
+            position: relative;
+            top: 0;
+            left: 50%;
+            margin-left: -6px;
+
+        }
+
+        form .likert li label {
+            width: 100%;
+        }
+
+        form .buttons {
+            margin: 30px 0;
+            padding: 0 4.25%;
+            text-align: right
+        }
+
+        form .buttons button {
+            padding: 5px 10px;
+            background-color: #67ab49;
+            border: 0;
+            border-radius: 3px;
+        }
+
+        form .buttons .clear {
+            background-color: #e9e9e9;
+        }
+
+        form .buttons .submit {
+            background-color: #67ab49;
+        }
+
+        form .buttons .clear:hover {
+            background-color: #ccc;
+        }
+
+        form .buttons .submit:hover {
+            background-color: #14892c;
+        }
+    </style>
+</head>
+<body>  
+    <div id="uc-content">
+
+  <h2 class="uctitle">UC1: Names/Method → Proposal/Teams</h2>
+        <h3>Given a researcher's name and a matching method, show a list of highest ranked proposals and candidate teams.</h3>
+        <form name="map" method="post">
+            <label for="browser">Select researcher's name:</label>
+            <select name="inputtext" id="browser">
+                <option value="Agostinelli, Forest" selected>Agostinelli, Forest</option>
+                {% for j in names %}
+                  <option value="{{j}}">{{j}}</option>
+                {% endfor %}
+              </select>
+        
+            <br><br>
+            <label for="method-select">Select method:</label>
+            <select name="methods" id="method-select">
+                <option value="M0: Random Matching" selected>M0: Random Matching</option>
+                <option value="M1: String Matching">M1: String Matching</option>
+                <option value="M2: Semantic Matching">M2: Semantic Matching</option>
+                <option value="M3: Boosted Bandit Matching">M3: Boosted Bandit Matching</option>
+            </select>
+            <p>
+                <label for="results-select">Number of Results:</label>
+                <select name="results" id="result-select">
+                    <option value="5" selected>5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="25">25</option>
+                </select>,
+                <label for="teams-select">Number of teams per proposal:</label>
+                <select name="teams" id="team-select">
+                    <option value="3" selected>3</option>
+                    <option value="5">5</option>
+                    <option value="7">7</option>
+                    <option value="10">10</option>
+                </select>
+            </p>
+            <br>
+        
+            <input type="submit" name="answer" value="Enter" />
+        
+            <!-- <input type="submit" value="Find matching proposals">  -->
+        </form>
+        
+  <script>
+  var inputs = document.querySelectorAll('select');
+
+    for (var i = 0; i < inputs.length; i++) {
+    var input = inputs[i];
+    var savedValue = localStorage.getItem(input.id);
+
+    if (savedValue) {
+        input.value = savedValue;
+    }
+
+    input.addEventListener('change', function() {
+        localStorage.setItem(this.id, this.value);
+    });
+    }
+
+  function getVal() {
+  event.preventDefault();
+  const val = document.querySelector('input').value;
+  console.log(val);
+  }
+
+  function submitForm(event) {
+  event.preventDefault();
+  // do something with the form data
+  }
+  </script>
+ 
+
+  <br><br>
+  {% if name %}
+  <div id="ucdiv1" class="answer_list">
+      <p>
+          Selected Member: <span style="color:green;"><b>{{name}}</b></span>,
+          Selected Method: <span style="color:green;"><b>{{method}}</b></span>
+      </p>
+      <center>
+          <table width="90%">
+              <tr>
+                  <th>Index</th>
+                  <th>Proposal ID</th>
+                  <th>Proposal Name</th>
+                  <th>Recommended Teams</th>
+                  <th>Overall Goodness Score</th>
+              </tr>
+              
+              {% for j in my_range %} 
+               <tr>
+                  <td>
+                      <center>
+                          {{j + 1}}
+                          </center>
+                  </td>
+                  <td>
+                      <center>
+                          {{nsfids[j]}}
+                          </center>
+                  </td>
+                  <td>
+                    <a href={{nsflinks[j]}} target="_blank">{{nsftitles[j]}}</a><br>
+                    skills needed:{{skills}}
+                      </td>
+                      <td>
+                        {% for item in teams[j] %}
+                          {{ item }}
+                          <br>
+                        {% endfor %}
+                      </td>
+                  <td>
+                    {% for item in gscore[j] %}
+                      {{ item }}
+                      <br>
+                    {% endfor %}
+                  </td>
+                  
+              </tr>
+              {% endfor %}
+              
+          </table>
+      </center>
+      <hr>
+
+  </div>  
+  </div>
+  </div>
+  {% if method == "M0: Random Matching" %}
+  <iframe id="iframe" style="width:100%; height: calc(100vh - 200px); border:none;"src="http://casy.cse.sc.edu/feedback_uc_1/"></iframe>
+  {% endif %}
+  {% if method == "M1: String Matching" %}
+  <iframe id="iframe" style="width:100%; height: calc(100vh - 200px); border:none;"src="http://casy.cse.sc.edu/feedback_uc_1_m1/"></iframe>
+  {% endif %}
+  {% if method == "M2: Semantic Matching" %}
+  <iframe id="iframe" style="width:100%; height: calc(100vh - 200px); border:none;"src="http://casy.cse.sc.edu/feedback_uc_1_m2/"></iframe>
+  {% endif %}
+  {% if method == "M3: Boosted Bandit Matching" %}
+  <iframe id="iframe" style="width:100%; height: calc(100vh - 200px); border:none;"src="http://casy.cse.sc.edu/feedback_uc_1_m3/"></iframe>
+  {% endif %}
+  {% endif %}
+  
+</div>
+
+
+</body>
+</html>

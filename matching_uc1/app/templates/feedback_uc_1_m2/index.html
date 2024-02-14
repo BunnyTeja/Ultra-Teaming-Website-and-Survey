@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial;
+        }
+
+        .uctitle {
+            color: maroon;
+        }
+
+        .likert-header {
+            color: maroon;
+        }
+
+        /* Style the tab */
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 17px;
+        }
+
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+            background-color: #ddd;
+        }
+
+        /* Create an active/current tablink class */
+        .tab button.active {
+            background-color: #ccc;
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+
+        table,
+        th,
+        td {
+            border: 0.5px solid black;
+        }
+
+        .wrap {
+            font: 12px Arial, san-serif;
+        }
+
+
+        form .statement {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 30px 0 0 4.25%;
+            margin-bottom: 10px;
+        }
+
+        form .likert {
+            list-style: none;
+            width: 100%;
+            margin: 0;
+            padding: 0 0 35px;
+            display: block;
+            border-bottom: 2px solid #efefef;
+        }
+
+        form .likert:last-of-type {
+            border-bottom: 0;
+        }
+
+        form .likert:before {
+            content: '';
+            position: relative;
+            top: 11px;
+            left: 9.5%;
+            display: block;
+            background-color: #efefef;
+            height: 4px;
+            width: 78%;
+        }
+
+        form .likert li {
+            display: inline-block;
+            width: 19%;
+            text-align: center;
+            vertical-align: top;
+        }
+
+        form .likert li input[type=radio] {
+            display: block;
+            position: relative;
+            top: 0;
+            left: 50%;
+            margin-left: -6px;
+
+        }
+
+        form .likert li label {
+            width: 100%;
+        }
+
+        form .buttons {
+            margin: 30px 0;
+            padding: 0 4.25%;
+            text-align: right
+        }
+
+        form .buttons button {
+            padding: 5px 10px;
+            background-color: #67ab49;
+            border: 0;
+            border-radius: 3px;
+        }
+
+        form .buttons .clear {
+            background-color: #e9e9e9;
+        }
+
+        form .buttons .submit {
+            background-color: #67ab49;
+        }
+
+        form .buttons .clear:hover {
+            background-color: #ccc;
+        }
+
+        form .buttons .submit:hover {
+            background-color: #14892c;
+        }
+    </style>
+</head>
+<body>  
+ 
+  <div id="ucdiv1survey" >
+      <div class="wrap">
+          <h1 class="likert-header">Survey</h1>
+          <!-- Include jQuery library -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Form HTML -->
+<!-- HTML Form -->
+<form action="feedback_uc1_m2.php" method="post" >
+    <label class="statement">How relevant is the output given the input?</label>
+    <ul class='likert'>
+        <li>
+            <input type="radio" name="rel_response" value="very_relevant" required>
+            <label>Very relevant</label>
+        </li>
+        <li>
+            <input type="radio" name="rel_response" value="somewhat_relevant" required>
+            <label>Somewhat relevant</label>
+        </li>
+        <li>
+            <input type="radio" name="rel_response" value="neutral" required>
+            <label>Neutral</label>
+        </li>
+        <li>
+            <input type="radio" name="rel_response" value="somewhat_irrelevant" required>
+            <label>Somewhat irrelevant</label>
+        </li>
+        <li>
+            <input type="radio" name="rel_response" value="irrelevant" required>
+            <label>Irrelevant</label>
+        </li>
+    </ul>
+
+    <br><br>
+
+    <label class="statement">How useful is the output?</label>
+    <ul class='likert'>
+        <li>
+            <input type="radio" name="use_response" value="Very_useful" required>
+            <label>Very useful</label>
+        </li>
+        <li>
+            <input type="radio" name="use_response" value="Somewhat_useful" required>
+            <label>Somewhat useful</label>
+        </li>
+        <li>
+            <input type="radio" name="use_response" value="Neutral" required>
+            <label>Neutral</label>
+        </li>
+        <li>
+            <input type="radio" name="use_response" value="Not_very_useful" required>
+            <label>Not very useful</label>
+        </li>
+        <li>
+            <input type="radio" name="use_response" value="Will_not_be_using_it" required>
+            <label>Will not be using it</label>
+        </li>
+    </ul>
+    <br>
+    
+    <label style="font-weight: bold;">Comments</label>
+    <br>
+    <textarea name="comments" rows="5" cols="50"></textarea>
+    <br><br>
+    <label>Selected Method</label>
+    <input type="text" value="M2" name="method" readonly>
+    , 
+    <label>Selected Use Case</label>
+    <input type="text" value="UC1" name="use_case" readonly>
+    <br><br>
+    <input type="submit" name="submit" value="Submit" />
+</form>
+<br><br>
+<div style="text-align: center; padding: 10px;">
+    <span style="color: maroon; font-weight: bold; padding: 5px;">For more details, refer to </span>
+    <a href="https://ai4society.github.io/teaming/" style="color: blue; text-decoration: none;">
+        https://ai4society.github.io/teaming/
+    </a>.
+</div>
+
+
+
+
+
+
+<!-- <script>
+    function showAlert(event) {
+      
+      // disable referrer header
+      document.referrer = '';
+    
+      // your form submission code here, e.g. AJAX request
+      // ...
+    
+      // show alert message
+      alert("Form submitted successfully!");
+    }
+    </script> -->
+
+ </div>
+ </div>
+</body>
+</html>
